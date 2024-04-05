@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Task List{% endblock %}
+
+{% block content %}
+  <h2>Task List</h2>
+  {% if tasks %}
+    <table style="width:100%; border-collapse: collapse;">
+      <thead>
+        <tr style="background-color: #f2f2f2;">
+          <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Title</th>
+          <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Description</th>
+          <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Due Date</th>
+          <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Priority</th>
+          <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Status</th>
+          <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Assigned To</th>
+          <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for task in tasks %}
+          <tr>
+            <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{ task.title }}</td>
+            <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{ task.description }}</td>
+            <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{ task.due_date }}</td>
+            <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{ task.get_priority_display }}</td>
+            <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{ task.get_status_display }}</td>
+            <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{ task.assigned_to.username }}</td>
+            <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">
+              <a href="{% url 'task-update' task.id %}">Edit</a> |
+              <a href="{% url 'task-delete' task.id %}">Delete</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No tasks found.</p>
+  {% endif %}
+{% endblock %}
